@@ -22,6 +22,14 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
+        },
+        chart: {
+          primary: "hsl(var(--chart-primary))",
+          secondary: "hsl(var(--chart-secondary))",
+          accent: "hsl(var(--chart-accent))",
+          grid: "hsl(var(--chart-grid))",
+          tooltip: "hsl(var(--chart-tooltip))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
