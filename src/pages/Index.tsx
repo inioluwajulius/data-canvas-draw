@@ -61,6 +61,17 @@ const Index = () => {
             </div>
           </div>
         </div>
+
+        {/* Attribution Section */}
+        <div className="mt-8 text-center">
+          <div className="bg-gradient-to-r from-primary/10 to-primary-glow/10 p-4 rounded-lg border border-primary/20">
+            <p className="text-sm text-muted-foreground">
+              Created by Computer Science Student of{" "}
+              <span className="font-semibold text-primary">Ladoke Akintola University of Technology (LAUTECH)</span>
+              {" "}Class 27
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
