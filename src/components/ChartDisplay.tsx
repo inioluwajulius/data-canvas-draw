@@ -22,12 +22,25 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
   };
 
   const processDataForHistogram = (data: DataPoint[]) => {
-    if (data.length === 0) return [];
+    // Filter out invalid data points
+    const validData = data.filter(d => d && typeof d.y === 'number' && !isNaN(d.y));
+    
+    if (validData.length === 0) return [];
 
     // For histogram, we'll create bins based on Y values
-    const values = data.map(d => d.y);
+    const values = validData.map(d => d.y);
     const min = Math.min(...values);
     const max = Math.max(...values);
+    
+    // Handle edge case where all values are the same
+    if (min === max) {
+      return [{
+        x: `${min}`,
+        y: values.length,
+        range: [min, min],
+      }];
+    }
+    
     const binCount = Math.min(10, Math.max(3, Math.ceil(Math.sqrt(values.length))));
     const binSize = (max - min) / binCount;
 
@@ -45,10 +58,12 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
     return bins;
   };
 
-  const chartData = chartType === "histogram" ? processDataForHistogram(data) : data;
+  // Filter out invalid data points for both chart types
+  const validData = data.filter(d => d && typeof d.y === 'number' && !isNaN(d.y) && d.x);
+  const chartData = chartType === "histogram" ? processDataForHistogram(validData) : validData;
   const title = chartType === "bar" ? "Bar Chart" : "Histogram";
 
-  if (data.length === 0) {
+  if (validData.length === 0) {
     return (
       <Card className="shadow-lg border-0 bg-gradient-to-br from-card to-accent/5">
         <CardContent className="flex items-center justify-center h-96">
