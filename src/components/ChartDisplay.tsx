@@ -24,7 +24,7 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
   const processDataForHistogram = (validData: DataPoint[]) => {
     if (validData.length === 0) return [];
 
-    // For histogram, we'll create bins based on Y values - using already filtered data
+    // For histogram, we create bins based on Y values and count frequencies
     const values = validData.map(d => d.y);
     const min = Math.min(...values);
     const max = Math.max(...values);
@@ -34,22 +34,28 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
       return [{
         x: `${min}`,
         y: values.length,
-        range: [min, min],
       }];
     }
     
-    const binCount = Math.min(10, Math.max(3, Math.ceil(Math.sqrt(values.length))));
+    const binCount = Math.min(8, Math.max(4, Math.ceil(Math.sqrt(values.length))));
     const binSize = (max - min) / binCount;
 
-    const bins = Array.from({ length: binCount }, (_, i) => ({
-      x: `${(min + i * binSize).toFixed(1)}-${(min + (i + 1) * binSize).toFixed(1)}`,
-      y: 0,
-      range: [min + i * binSize, min + (i + 1) * binSize],
-    }));
+    // Create bins with ranges as labels
+    const bins = Array.from({ length: binCount }, (_, i) => {
+      const start = min + i * binSize;
+      const end = min + (i + 1) * binSize;
+      return {
+        x: `${start.toFixed(1)}-${end.toFixed(1)}`,
+        y: 0,
+        range: [start, end],
+      };
+    });
 
-    // Use the already validated values array instead of accessing data points again
+    // Count values that fall into each bin
     values.forEach(value => {
-      const binIndex = Math.min(binCount - 1, Math.floor((value - min) / binSize));
+      let binIndex = Math.floor((value - min) / binSize);
+      // Handle edge case where value equals max
+      if (binIndex >= binCount) binIndex = binCount - 1;
       bins[binIndex].y++;
     });
 
@@ -59,7 +65,8 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
   // Filter out invalid data points for both chart types
   const validData = data.filter(d => d && typeof d.y === 'number' && !isNaN(d.y) && d.x);
   const chartData = chartType === "histogram" ? processDataForHistogram(validData) : validData;
-  const title = chartType === "bar" ? "Bar Chart" : "Histogram";
+  const title = chartType === "bar" ? "Bar Chart (Individual Values)" : "Histogram (Frequency Distribution)";
+  const yAxisLabel = chartType === "bar" ? "Value" : "Frequency";
 
   if (validData.length === 0) {
     return (
@@ -69,7 +76,7 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
             <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary/20 to-primary-glow/20 rounded-full flex items-center justify-center">
               <BarChart className="w-8 h-8 text-primary" />
             </div>
-            <p className="text-muted-foreground">Add data points to see your chart</p>
+            <p className="text-muted-foreground">Add data points to see your {chartType === "bar" ? "bar chart" : "histogram"}</p>
           </div>
         </CardContent>
       </Card>
@@ -108,6 +115,12 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
               <YAxis 
                 tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
                 axisLine={{ stroke: "hsl(var(--border))" }}
+                label={{ 
+                  value: yAxisLabel, 
+                  angle: -90, 
+                  position: 'insideLeft',
+                  style: { textAnchor: 'middle', fill: "hsl(var(--foreground))" }
+                }}
               />
               <Tooltip
                 contentStyle={{
@@ -117,6 +130,13 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 }}
                 labelStyle={{ color: "hsl(var(--foreground))" }}
+                formatter={(value, name) => [
+                  value, 
+                  chartType === "histogram" ? "Frequency" : "Value"
+                ]}
+                labelFormatter={(label) => 
+                  chartType === "histogram" ? `Range: ${label}` : `Category: ${label}`
+                }
               />
               <Bar 
                 dataKey="y" 
