@@ -21,13 +21,10 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
     return colors[index % colors.length];
   };
 
-  const processDataForHistogram = (data: DataPoint[]) => {
-    // Filter out invalid data points
-    const validData = data.filter(d => d && typeof d.y === 'number' && !isNaN(d.y));
-    
+  const processDataForHistogram = (validData: DataPoint[]) => {
     if (validData.length === 0) return [];
 
-    // For histogram, we'll create bins based on Y values
+    // For histogram, we'll create bins based on Y values - using already filtered data
     const values = validData.map(d => d.y);
     const min = Math.min(...values);
     const max = Math.max(...values);
@@ -50,6 +47,7 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
       range: [min + i * binSize, min + (i + 1) * binSize],
     }));
 
+    // Use the already validated values array instead of accessing data points again
     values.forEach(value => {
       const binIndex = Math.min(binCount - 1, Math.floor((value - min) / binSize));
       bins[binIndex].y++;
