@@ -1,15 +1,9 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DataPoint } from "./DataInput";
 
-interface ChartDisplayProps {
-  data: DataPoint[];
-  chartType: "bar" | "histogram";
-}
-
-export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
+export const ChartDisplay = ({ data, chartType }) => {
   // Generate colors for each bar
-  const getBarColor = (index: number) => {
+  const getBarColor = (index) => {
     const colors = [
       "hsl(var(--chart-primary))",
       "hsl(var(--chart-secondary))",
@@ -21,7 +15,7 @@ export const ChartDisplay = ({ data, chartType }: ChartDisplayProps) => {
     return colors[index % colors.length];
   };
 
-  const processDataForHistogram = (validData: DataPoint[]) => {
+  const processDataForHistogram = (validData) => {
     if (validData.length === 0) return [];
 
     // For histogram, we create bins based on Y values and count frequencies

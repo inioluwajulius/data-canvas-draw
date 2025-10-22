@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { DataInput, DataPoint } from "@/components/DataInput";
+import { DataInput } from "@/components/DataInput";
 import { ChartDisplay } from "@/components/ChartDisplay";
 import { ChartTypeSelector } from "@/components/ChartTypeSelector";
 import { TrendingUp } from "lucide-react";
 
 const Index = () => {
-  const [data, setData] = useState<DataPoint[]>([]);
-  const [chartType, setChartType] = useState<"bar" | "histogram">("bar");
+  const [data, setData] = useState([]);
+  const [chartType, setChartType] = useState("bar");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10">
@@ -59,17 +59,6 @@ const Index = () => {
                 Shows the distribution of your data by grouping values into bins. Great for understanding data patterns.
               </p>
             </div>
-          </div>
-        </div>
-
-        {/* Attribution Section */}
-        <div className="mt-8 text-center">
-          <div className="bg-gradient-to-r from-primary/10 to-primary-glow/10 p-4 rounded-lg border border-primary/20">
-            <p className="text-sm text-muted-foreground">
-              Created by Computer Science Student of{" "}
-              <span className="font-semibold text-primary">Ladoke Akintola University of Technology (LAUTECH)</span>
-              {" "}Class 27
-            </p>
           </div>
         </div>
       </div>

@@ -6,17 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
-export interface DataPoint {
-  x: string;
-  y: number;
-}
-
-interface DataInputProps {
-  data: DataPoint[];
-  onDataChange: (data: DataPoint[]) => void;
-}
-
-export const DataInput = ({ data, onDataChange }: DataInputProps) => {
+export const DataInput = ({ data, onDataChange }) => {
   const [newX, setNewX] = useState("");
   const [newY, setNewY] = useState("");
 
@@ -32,7 +22,7 @@ export const DataInput = ({ data, onDataChange }: DataInputProps) => {
       return;
     }
 
-    const newDataPoint: DataPoint = {
+    const newDataPoint = {
       x: newX.trim(),
       y: yValue,
     };
@@ -43,14 +33,14 @@ export const DataInput = ({ data, onDataChange }: DataInputProps) => {
     toast.success("Data point added!");
   };
 
-  const removeDataPoint = (index: number) => {
+  const removeDataPoint = (index) => {
     const newData = data.filter((_, i) => i !== index);
     onDataChange(newData);
     toast.success("Data point removed!");
   };
 
   const loadSampleData = () => {
-    const sampleData: DataPoint[] = [
+    const sampleData = [
       { x: "Jan", y: 65 },
       { x: "Feb", y: 78 },
       { x: "Mar", y: 90 },

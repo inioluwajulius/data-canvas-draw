@@ -2,12 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, BarChart4 } from "lucide-react";
 
-interface ChartTypeSelectorProps {
-  activeType: "bar" | "histogram";
-  onTypeChange: (type: "bar" | "histogram") => void;
-}
-
-export const ChartTypeSelector = ({ activeType, onTypeChange }: ChartTypeSelectorProps) => {
+export const ChartTypeSelector = ({ activeType, onTypeChange }) => {
   return (
     <Card className="shadow-lg border-0 bg-gradient-to-br from-card to-accent/5">
       <CardContent className="p-4">
