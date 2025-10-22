@@ -5,12 +5,12 @@ export const ChartDisplay = ({ data, chartType }) => {
   // Generate colors for each bar
   const getBarColor = (index) => {
     const colors = [
-      "hsl(var(--chart-primary))",
-      "hsl(var(--chart-secondary))",
-      "hsl(var(--chart-accent))",
-      "hsl(262 60% 55%)",
-      "hsl(200 80% 50%)",
-      "hsl(320 80% 60%)",
+      "#a855f7",
+      "#3b82f6",
+      "#ec4899",
+      "#8b5cf6",
+      "#06b6d4",
+      "#f472b6",
     ];
     return colors[index % colors.length];
   };
@@ -98,32 +98,30 @@ export const ChartDisplay = ({ data, chartType }) => {
             >
               <CartesianGrid 
                 strokeDasharray="3 3" 
-                stroke="hsl(var(--chart-grid))"
+                className="stroke-muted"
                 opacity={0.3}
               />
               <XAxis 
                 dataKey="x" 
-                tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
-                axisLine={{ stroke: "hsl(var(--border))" }}
+                tick={{ fontSize: 12 }}
+                className="fill-foreground"
               />
               <YAxis 
-                tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
-                axisLine={{ stroke: "hsl(var(--border))" }}
+                tick={{ fontSize: 12 }}
+                className="fill-foreground"
                 label={{ 
                   value: yAxisLabel, 
                   angle: -90, 
                   position: 'insideLeft',
-                  style: { textAnchor: 'middle', fill: "hsl(var(--foreground))" }
+                  className: 'fill-foreground'
                 }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
                   borderRadius: "8px",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 }}
-                labelStyle={{ color: "hsl(var(--foreground))" }}
+                wrapperClassName="bg-card border border-border text-foreground"
                 formatter={(value, name) => [
                   value, 
                   chartType === "histogram" ? "Frequency" : "Value"
