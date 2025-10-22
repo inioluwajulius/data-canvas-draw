@@ -98,22 +98,20 @@ export const ChartDisplay = ({ data, chartType }) => {
             >
               <CartesianGrid 
                 strokeDasharray="3 3" 
-                className="stroke-muted"
+                stroke="#e5e7eb"
                 opacity={0.3}
               />
               <XAxis 
                 dataKey="x" 
-                tick={{ fontSize: 12 }}
-                className="fill-foreground"
+                tick={{ fontSize: 12, fill: "#374151" }}
               />
               <YAxis 
-                tick={{ fontSize: 12 }}
-                className="fill-foreground"
+                tick={{ fontSize: 12, fill: "#374151" }}
                 label={{ 
                   value: yAxisLabel, 
                   angle: -90, 
                   position: 'insideLeft',
-                  className: 'fill-foreground'
+                  style: { textAnchor: 'middle', fill: "#374151" }
                 }}
               />
               <Tooltip
