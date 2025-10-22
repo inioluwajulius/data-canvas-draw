@@ -1,5 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BarChart3 } from "lucide-react";
 
 export const ChartDisplay = ({ data, chartType }) => {
   // Generate colors for each bar
@@ -68,7 +69,7 @@ export const ChartDisplay = ({ data, chartType }) => {
         <CardContent className="flex items-center justify-center h-96">
           <div className="text-center space-y-2">
             <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary/20 to-primary-glow/20 rounded-full flex items-center justify-center">
-              <BarChart className="w-8 h-8 text-primary" />
+              <BarChart3 className="w-8 h-8 text-primary" />
             </div>
             <p className="text-muted-foreground">Add data points to see your {chartType === "bar" ? "bar chart" : "histogram"}</p>
           </div>
